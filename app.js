@@ -25,6 +25,10 @@ app.engine('.hbs', exphbs.engine({
 )
 app.set('view engine', '.hbs')
 
+//Routes
+app.use('/', require('./routes/index'))
+// app.use('/dashboard', require('./routes/index'))
+
 const PORT = process.env.PORT || 8500
 
 app.listen(PORT, console.log(`Server running on ${process.env.NODE_ENV} mode on PORT ${PORT}`))
