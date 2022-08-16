@@ -15,5 +15,14 @@ authenticate('google', {failureRedirect: '/'}),
     res.redirect('/dashboard')
 })
 
+//@desc Logout User
+//@route /auth/loogout 
+
+router.get('/logout', (req,res) => {
+    req.logout(function(err) {
+        if (err) {return nex(err)}
+        res.redirect('/')
+    })
+})
 
 module.exports = router
