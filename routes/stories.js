@@ -48,18 +48,37 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
         _id: req.params.id
     }).lean()
 
-    if(!story){
+    if (!story) {
         return res.render('error/404')
     }
 
-    if(story.user != req.user.id) {
+    if (story.user != req.user.id) {
         res.redirect('/stories')
     } else {
         res.render('stories/edit', {
-            story, 
+            story,
         })
     }
 })
+//@desc Udate story
+//@route PUT /stories/:id
+router.PUT('/:id', ensureAuth, async (req, res) => {
+    let story = await Story.findById(req.params.id).lean()
+
+    if (!story) {
+        return res.render('error / 404')
+    }
+
+    if (story.user != req.user.id) {
+        res.redirect('/stories')
+    } else {
+        story = await Story.findOneAndUpdate({ _id: req.params.id }, req.body, {
+            new: true,
+            runValidators: true
+        })
+    }
+})
+
 
 
 module.exports = router
